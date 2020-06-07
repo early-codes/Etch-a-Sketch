@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+</head>
+
+<body>
+
+  <div id="canvasContainer">
+
+
+  </div>
+
+
+
+
+</body>
+
+<script>
+  const alti = 6;
+  const container = document.querySelector("#canvasContainer");
+  const btn1 = document.createElement("input");
+  const btn2 = document.createElement("input");
+  const btn3 = document.createElement("input");
+  btn1.setAttribute("value", "clear");
+  btn1.setAttribute("type", "button");
+  const br = document.createElement("br");
+  container.appendChild(btn1);
+  container.appendChild(br);
+  container.setAttribute("style", "position: fixed; top: 50%; left: 50%; ")
+    for (i = 0 ; i < 8; i++) {
+      for(j = 0 ; j < 8; j++) {
+        const cell = document.createElement("div");
+        cell.setAttribute("style", `border: 1px; border-style: solid; height: 30px; width: ${alti * 5}px; background: blue; float: left;`);
+        let cellID = i + " " + j;
+        cell.classList.add("cell");
+        container.appendChild(cell);
+      }
+      const br = document.createElement("br");
+      container.appendChild(br);
+    }
+  const cellsAll = document.querySelectorAll('.cell');
+  cellsAll.forEach((cell) => {
+    cell.addEventListener('mouseover', (e) => {
+      cell.setAttribute("style", " border: 1px; border-style: solid; height: 30px; width: 30px; background: black; float: left;");
+    });
+  });
+</script>
