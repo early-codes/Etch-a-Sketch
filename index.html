@@ -7,7 +7,8 @@
 
 <body>
 
-  <div id="canvasContainer">
+
+  <div id="Container">
 
 
   </div>
@@ -16,34 +17,71 @@
 
 
 </body>
-
 <script>
-  const alti = 6;
-  const container = document.querySelector("#canvasContainer");
+  let rowsColumns = 8;
+  let cellColor = "blue";
+  let brush = "000000"
+  const container = document.querySelector("#Container");
+  container.setAttribute("style", "position: relative; top: 10%; left: 30%; width: 700px; height: 800px; border-style: solid; border: 2px; border-color: black; background-color:;")
+  const buttonContainer = document.createElement("div");
+  buttonContainer.setAttribute("style", "margin : 0 auto; position: relative; left: 70% height: 110px; width: 200px; ")
+  const br = document.createElement("br");
   const btn1 = document.createElement("input");
   const btn2 = document.createElement("input");
   const btn3 = document.createElement("input");
+  buttonContainer.appendChild(btn1);
   btn1.setAttribute("value", "clear");
   btn1.setAttribute("type", "button");
-  const br = document.createElement("br");
-  container.appendChild(btn1);
+  btn1.setAttribute("style", "width: 99px")
+
+  buttonContainer.appendChild(btn2);
+  btn2.setAttribute("value", "random color");
+  btn2.setAttribute("type", "button");
+  btn2.setAttribute("style", "width: 99px")
+  container.appendChild(buttonContainer);
   container.appendChild(br);
-  container.setAttribute("style", "position: fixed; top: 50%; left: 50%; ")
-    for (i = 0 ; i < 8; i++) {
-      for(j = 0 ; j < 8; j++) {
+  const canvasContainer = document.createElement("div");
+  canvasContainer.setAttribute("style", "position: relative; margin: 0 auto; width: 600px; height: 600px; border-style: solid; border: 2px; border-color: black; background-color: ;")
+  container.appendChild(canvasContainer);
+  
+  function draw (rowsColumns, cellColor){
+    for (i = 0 ; i < rowsColumns; i++) {
+      for(j = 0 ; j < rowsColumns; j++) {
         const cell = document.createElement("div");
-        cell.setAttribute("style", `border: 1px; border-style: solid; height: 30px; width: ${alti * 5}px; background: blue; float: left;`);
+        cell.setAttribute("style", `border: 0px; border-style: solid; height: ${(600/rowsColumns)}px; width: ${(600/rowsColumns)}px; background: ${cellColor}; float: left;`);
         let cellID = i + " " + j;
         cell.classList.add("cell");
-        container.appendChild(cell);
+        canvasContainer.appendChild(cell);
       }
-      const br = document.createElement("br");
-      container.appendChild(br);
+      const newLine = document.createElement("p");
+      canvasContainer.appendChild(newLine);
     }
-  const cellsAll = document.querySelectorAll('.cell');
-  cellsAll.forEach((cell) => {
-    cell.addEventListener('mouseover', (e) => {
-      cell.setAttribute("style", " border: 1px; border-style: solid; height: 30px; width: 30px; background: black; float: left;");
+    const cellsAll = document.querySelectorAll('.cell');
+    cellsAll.forEach((cell) => {
+      cell.addEventListener('mouseover', (e) => {
+        cell.setAttribute("style", `border: 0px; border-style: solid; height: ${(600/rowsColumns)}px; width: ${(600/rowsColumns)}px; background: #${brush}; float: left;`);
+      });
     });
+  }
+  btn2.addEventListener('click', (z) => {
+    let rand = Math.floor((Math.random() * 16777210));
+    brush = rand.toString(16);
   });
+  btn1.addEventListener('click', (e) => {
+    const cellsAll = document.querySelectorAll(".cell");
+    cellsAll.forEach((cell) => {
+      cell.remove()
+    });
+
+    rowsColumns = prompt("how many rows & columns?");
+    if (rowsColumns > 100) { 
+      alert("Thats big! 100 will be enough!");
+      rowsColumns = 100;
+    }
+    brush = "000000";
+    draw(rowsColumns, cellColor);
+  });
+  draw (rowsColumns, cellColor);
+
+
 </script>
